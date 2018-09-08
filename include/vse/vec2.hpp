@@ -11,11 +11,11 @@ public:
     vec2(const vec2&) = default;
     ~vec2() = default;
 
-    float getX() const { return _x; };
-    float getY() const { return _y; };
+    float get_x() const { return _x; };
+    float get_y() const { return _y; };
     
-    void setX(float x) { this->_x = x; };
-    void setY(float y) { this->_y = y; };
+    void set_x(float x) { this->_x = x; };
+    void set_y(float y) { this->_y = y; };
     
     vec2 operator+(const vec2 &rhs) const;//Adding vectors
     vec2 operator-(const vec2 &rhs) const;//Subtracting vectors
