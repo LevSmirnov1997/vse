@@ -30,6 +30,11 @@ int main()
 
 	// set callbacks
 	glfwSetKeyCallback(w, key_callback);
+	glfwMakeContextCurrent(w);
+	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+
+	glfwSwapInterval(1);
+
 	printf("OpenGL %d.%d\n", GLVersion.major, GLVersion.minor);
 
 	while (!glfwWindowShouldClose(w))
@@ -37,10 +42,6 @@ int main()
 		glfwSwapBuffers(w);
 		glfwPollEvents();
 	}
-
-	glfwMakeContextCurrent(w);
-	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-	glfwSwapInterval(1);
 
 
 	glfwDestroyWindow(w);
