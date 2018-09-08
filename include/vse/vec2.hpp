@@ -18,13 +18,13 @@ public:
     void set_x(float x) { this->_x = x; };
     void set_y(float y) { this->_y = y; };
     
-    vec2 operator+(const vec2 &rhs) const;//Adding vectors
-    vec2 operator-(const vec2 &rhs) const;//Subtracting vectors
-    float magn() const;//Magnitude of vector
+    vec2 operator+(const vec2 &rhs) const; //Adding vectors
+    vec2 operator-(const vec2 &rhs) const; //Subtracting vectors
+    float magn() const; //Magnitude of vector
 };
 
-float dot(const vec2 &lhs, const vec2 &rhs);//Dot product of vectors
-vec2 dot(const vec2 &lhs, float rhs);//Dot product of vector & scalar    
-float cross(const vec2 &lhs, const vec2 &rhs);//Cross product of vectors
+float dot(const vec2 &lhs, const vec2 &rhs); //Dot product of vectors
+vec2 dot(const vec2 &lhs, float rhs); //Dot product of vector & scalar    
+float cross(const vec2 &lhs, const vec2 &rhs); //Cross product of vectors
 
 #endif

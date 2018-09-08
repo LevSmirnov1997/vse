@@ -1,7 +1,9 @@
 #include "vec2.hpp"
 #include <cmath>
 
-vec2::vec2(float x, float y) :_x(x), _y(y) {}
+vec2::vec2(float x, float y) 
+    :_x(x), _y(y) {
+}
 
 vec2 vec2::operator+(const vec2 &rhs) const {
     return vec2(_x + rhs.get_x(), _y + rhs.get_y());
