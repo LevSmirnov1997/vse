@@ -13,7 +13,10 @@ find_package(GLFW REQUIRED)
 include_directories(${GLFW_INCLUDE_DIR})
 
 set (HEADERS)
-set (SOURCES "src/main.cpp")
+set (SOURCES 
+        "src/main.cpp"
+        "src/vec2.cpp"
+    )
 
 add_executable(vse ${HEADERS} ${SOURCES})
 
