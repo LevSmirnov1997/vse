@@ -1,6 +1,7 @@
 #include "window.hpp"
 #include "input.hpp"
 #include <iostream>
+#include <exception>
 
 Window::Window(int width, int height, const char *title, bool fullscreen)
 {
@@ -14,7 +15,7 @@ Window::Window(int width, int height, const char *title, bool fullscreen)
 		glfwCreateWindow(width, height, title, NULL, NULL);
 
 	if (m_w == NULL) {
-		throw std::exception("Failed to create a window");
+		throw std::runtime_error("Failed to create a window");
 	}
 
 	// some dark magic from https://stackoverflow.com/questions/7676971/

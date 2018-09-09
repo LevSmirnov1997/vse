@@ -27,7 +27,7 @@ if (MSVC)
     target_compile_options (vse PRIVATE /W4)
 	target_link_libraries(vse glad ${GLFW_LIBRARIES})
 else()
-    target_compile_options (vse PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options (vse PRIVATE -std=c++14 -Wall -Wextra -Wpedantic -Wfatal-errors)
 	target_link_libraries(vse glad glfw3 dl pthread X11 m)
 endif()
 
