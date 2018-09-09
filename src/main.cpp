@@ -1,15 +1,33 @@
 #include <iostream>
+#include <memory>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <vse/window.hpp>
+#include <vse/input.hpp>
 
-static void error_callback(int error, const char* description)
+static void on_key(event_key e)
 {
-	std::fprintf(stderr, "Error: %s\n", description);
+	std::cout << "Key: " << e.key << " " << e.mods;
+	if (e.action == GLFW_REPEAT) {
+		std::cout << " repeated";
+	}
+	else if (e.action == GLFW_PRESS) {
+		std::cout << " pressed";
+	}
+	else {
+		std::cout << " released";
+	}
+	std::cout << std::endl;
 }
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+
+static void on_mouse(event_mouse e)
 {
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	std::cout << "Mouse pos changed to: " << e.x << " " << e.y << std::endl;
+}
+
+static void on_scroll(event_scroll e)
+{
+	std::cout << "Mouse scroll offset: " << e.offset << std::endl;
 }
 
 int main()
@@ -19,33 +37,39 @@ int main()
 		printf("Cannot ininialize glfw context\n");
 		exit(EXIT_FAILURE);
 	}
-	glfwSetErrorCallback(error_callback);
 
-	GLFWwindow *w = glfwCreateWindow(640, 480, "VSE", NULL, NULL);
-	if (!w)
-	{
+	std::unique_ptr<Window> w = nullptr;
+	try {
+		w = std::make_unique<Window>(640, 480, "bery good");
+	}
+	catch (std::exception e) {
+		std::cerr << e.what() << std::endl;
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
-
-	// set callbacks
-	glfwSetKeyCallback(w, key_callback);
-	glfwMakeContextCurrent(w);
 	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-
-	glfwSwapInterval(1);
+	w->set_pos(400, 100);
+	w->set_size(500, 200);
 
 	printf("OpenGL %d.%d\n", GLVersion.major, GLVersion.minor);
 
-	while (!glfwWindowShouldClose(w))
+	Input::get().on_key(on_key);
+	Input::get().on_mouse(on_mouse);
+	Input::get().on_scroll(on_scroll);
+
+	Input::get().on_key([&w](event_key e) {
+		if (e.key == GLFW_KEY_ESCAPE)
+			w->close();
+	});
+
+	glfwSwapInterval(1);
+	while (w->is_open())
 	{
-		glfwSwapBuffers(w);
+		w->swap_buffers();
 		glfwPollEvents();
 	}
 
-
-	glfwDestroyWindow(w);
 	glfwTerminate();
-    exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }
 
