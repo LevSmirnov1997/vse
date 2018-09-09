@@ -16,6 +16,8 @@ set (HEADERS)
 set (SOURCES 
         "src/main.cpp"
         "src/vec2.cpp"
+		"src/input.cpp"
+		"src/window.cpp"
     )
 
 add_executable(vse ${HEADERS} ${SOURCES})
