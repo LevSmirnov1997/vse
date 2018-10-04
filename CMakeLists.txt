@@ -18,6 +18,9 @@ set (HEADERS
 	"include/vse/vec2.hpp"
 	"include/vse/shader.hpp"
 	"include/vse/program.hpp"
+	"include/vse/buffer.hpp"
+	"include/vse/vao.hpp"
+	"include/vse/shapes.hpp"
 )
 
 set (SOURCES 
@@ -27,6 +30,9 @@ set (SOURCES
 	"src/window.cpp"
 	"src/shader.cpp"
 	"src/program.cpp"
+	"src/buffer.cpp"
+	"src/vao.cpp"
+	"src/shapes.cpp"
 )
 
 # just so they appear in VS project
