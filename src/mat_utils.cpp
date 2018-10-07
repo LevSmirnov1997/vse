@@ -34,8 +34,7 @@ mat4 translate(const mat4& transf, const vec2& tr) {
 }
 
 mat4 mult(const mat4& lhs, const mat4& rhs) {
-    float t_arr[16];
-    std::fill_n(t_arr, 16, 0);
+    float t_arr[16] = {0.0f};
     for(int i = 0; i < 4; ++i) {
         for(int j = 0; j < 4; ++j) {
             for(int k = 0; k < 4; ++k) {
@@ -43,5 +42,5 @@ mat4 mult(const mat4& lhs, const mat4& rhs) {
             }
         }
     }
-    return mat4(t_arr);
+    return {t_arr};
 }
