@@ -16,6 +16,8 @@ set (HEADERS
 	"include/vse/window.hpp"
 	"include/vse/input.hpp"
 	"include/vse/vec2.hpp"
+  "include/vse/mat4.cpp"
+  "include/vse/mat_utils.cpp"
 	"include/vse/shader.hpp"
 	"include/vse/program.hpp"
 	"include/vse/buffer.hpp"
@@ -24,8 +26,10 @@ set (HEADERS
 )
 
 set (SOURCES 
-    "src/main.cpp"
-    "src/vec2.cpp"
+  "src/main.cpp"
+  "src/vec2.cpp"
+  "src/mat4.cpp"
+  "src/mat_utils.cpp"
 	"src/input.cpp"
 	"src/window.cpp"
 	"src/shader.cpp"
