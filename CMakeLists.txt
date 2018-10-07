@@ -16,6 +16,8 @@ set (HEADERS)
 set (SOURCES 
         "src/main.cpp"
         "src/vec2.cpp"
+        "src/mat4.cpp"
+        "src/mat_utils.cpp"
 		"src/input.cpp"
 		"src/window.cpp"
     )
