@@ -5,6 +5,9 @@
 
 Window::Window(int width, int height, const char *title, bool fullscreen)
 {
+	if (!glfwInit()) {
+		throw std::runtime_error("Cannot ininialize glfw context\n");
+	}
 	glfwSetErrorCallback(callback_error);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -31,11 +34,16 @@ Window::Window(int width, int height, const char *title, bool fullscreen)
 	glfwSetCursorPosCallback(m_w, generic_callback(Input::get().callback_mouse_pos));
 	glfwSetScrollCallback(m_w, generic_callback(Input::get().callback_scroll));
 	glfwMakeContextCurrent(m_w);
+
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+		throw std::runtime_error("Failed to initialize GLAD\n");
+	}
 }
 
 Window::~Window()
 {
 	glfwDestroyWindow(m_w);
+	glfwTerminate();
 }
 
 void Window::set_pos(int x, int y) const
