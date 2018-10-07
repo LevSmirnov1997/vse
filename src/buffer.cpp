@@ -2,8 +2,8 @@
 #include <glad/glad.h>
 
 buffer::buffer(unsigned target, const void* data, unsigned size)
-	: m_size(size),
-	  m_type(target)
+	: m_type(target),
+	  m_size(size)
 {
 	glGenBuffers(1, &m_id);
 	this->bind();

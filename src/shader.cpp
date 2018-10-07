@@ -13,6 +13,8 @@ shader::shader(unsigned type, const std::string &path)
 	  m_type(type)
 {
 	this->load_source(path);
+	if (!this->compile())
+		throw std::runtime_error(this->info_log());
 }
 
 shader::shader(shader &&temp)

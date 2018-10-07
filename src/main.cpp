@@ -32,6 +32,7 @@ static void on_scroll(event_scroll e)
 	std::cout << "Mouse scroll offset: " << e.offset << std::endl;
 }
 
+
 int main()
 {
 	try {
@@ -40,7 +41,7 @@ int main()
 			printf("Cannot ininialize glfw context\n");
 			exit(EXIT_FAILURE);
 		}
-		Window w{ 640, 480, "bery good" };
+		Window w{ 800, 800, "bery good" };
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		{
 			std::cerr << "Failed to initialize GLAD\n";
@@ -63,8 +64,8 @@ int main()
 				{ GL_FRAGMENT_SHADER, "../shaders/basic.sf" }
 			}
 		);
-		std::cerr << p.info_log() << std::endl;
 		if (!p.valid()) {
+			std::cerr << p.info_log() << std::endl;
 			throw;
 		}
 		p.use();
