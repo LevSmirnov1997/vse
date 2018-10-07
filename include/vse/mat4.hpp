@@ -11,3 +11,5 @@ public:
 
     const float *const get_values() const { return values; }
 };
+
+mat4 mult(const mat4& lhs, const mat4& rhs);
