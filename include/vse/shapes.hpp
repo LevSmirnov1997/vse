@@ -12,6 +12,8 @@ public:
 
 	unsigned size() const { return m_size;  }
 
+	virtual ~shape() { }
+
 private:
 	vao m_vao;
 	unsigned m_size;
