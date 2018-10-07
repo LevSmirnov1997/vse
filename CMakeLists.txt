@@ -12,17 +12,40 @@ endif()
 find_package(GLFW REQUIRED)
 include_directories(${GLFW_INCLUDE_DIR})
 
-set (HEADERS)
-set (SOURCES 
-        "src/main.cpp"
-        "src/vec2.cpp"
-        "src/mat4.cpp"
-        "src/mat_utils.cpp"
-		"src/input.cpp"
-		"src/window.cpp"
-    )
+set (HEADERS
+	"include/vse/window.hpp"
+	"include/vse/input.hpp"
+	"include/vse/vec2.hpp"
+  "include/vse/mat4.cpp"
+  "include/vse/mat_utils.cpp"
+	"include/vse/shader.hpp"
+	"include/vse/program.hpp"
+	"include/vse/buffer.hpp"
+	"include/vse/vao.hpp"
+	"include/vse/shapes.hpp"
+)
 
-add_executable(vse ${HEADERS} ${SOURCES})
+set (SOURCES 
+  "src/main.cpp"
+  "src/vec2.cpp"
+  "src/mat4.cpp"
+  "src/mat_utils.cpp"
+	"src/input.cpp"
+	"src/window.cpp"
+	"src/shader.cpp"
+	"src/program.cpp"
+	"src/buffer.cpp"
+	"src/vao.cpp"
+	"src/shapes.cpp"
+)
+
+# just so they appear in VS project
+set (SHADERS
+	"shaders/basic.sv"
+	"shaders/basic.sf"
+)
+
+add_executable(vse ${HEADERS} ${SOURCES} ${SHADERS})
 
 
 if (MSVC)
