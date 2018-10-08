@@ -14,9 +14,9 @@ struct Model
 class Renderer : public System
 {
 public:
-	void update(ecs &e) override
+	void update(ecs &ens) override
 	{
-		for (const auto &e : e.with<Model>())
+		for (const auto &e : ens.with<Model>())
 		{
 			const auto &r = e.get<Model>().data;
 			r->bind();
@@ -70,7 +70,6 @@ int main()
 	catch (const std::exception &e) {
 		std::cerr << e.what() << std::endl;
 	}
-	glfwTerminate();
 	return 0;
 }
 

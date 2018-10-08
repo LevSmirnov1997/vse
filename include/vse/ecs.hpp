@@ -12,7 +12,7 @@ public:
 	template <typename T>
 	bool has() const
 	{
-		return m_man.has<T>(m_id);
+		return m_man.template has<T>(m_id);
 	}
 
 	template <typename T, typename ...Args>
@@ -24,13 +24,13 @@ public:
 	template <typename T>
 	T& get() const
 	{
-		return m_man.get<T>(m_id);
+		return m_man.template get<T>(m_id);
 	}
 
 	template <typename T>
 	bool remove() const
 	{
-		return m_man.remove<T>(m_id);
+		return m_man.template remove<T>(m_id);
 	}
 
 private:

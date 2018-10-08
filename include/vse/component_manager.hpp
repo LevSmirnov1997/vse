@@ -67,7 +67,7 @@ public:
 	template <typename T>
 	bool has(eid id)
 	{
-		return m_cmp[detail::type_id<T>].has<T>(id);
+		return m_cmp[detail::type_id<T>].template has<T>(id);
 	}
 
 	template <typename T, typename ...Args>
@@ -79,13 +79,13 @@ public:
 	template <typename T>
 	T& get(eid id)
 	{
-		return m_cmp[detail::type_id<T>].get<T>(id);
+		return m_cmp[detail::type_id<T>].template get<T>(id);
 	}
 
 	template <typename T>
 	bool remove(eid id)
 	{
-		return m_cmp[detail::type_id<T>].remove<T>(id);
+		return m_cmp[detail::type_id<T>].template remove<T>(id);
 	}
 
 private:
