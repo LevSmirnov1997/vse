@@ -23,6 +23,9 @@ set (HEADERS
 	"include/vse/buffer.hpp"
 	"include/vse/vao.hpp"
 	"include/vse/shapes.hpp"
+	"include/vse/component_manager.hpp"
+	"include/vse/system_manager.hpp"
+	"include/vse/ecs.hpp"
 )
 
 set (SOURCES 
@@ -37,6 +40,8 @@ set (SOURCES
   "src/buffer.cpp"
   "src/vao.cpp"
   "src/shapes.cpp"
+  "src/system_manager.cpp"
+  "src/ecs.cpp"
 )
 
 # just so they appear in VS project
