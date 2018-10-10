@@ -38,6 +38,7 @@ Window::Window(int width, int height, const char *title, bool fullscreen)
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		throw std::runtime_error("Failed to initialize GLAD\n");
 	}
+	glViewport(0, 0, width, height);
 }
 
 Window::~Window()
@@ -59,4 +60,10 @@ void Window::set_size(int w, int h) const
 void Window::callback_error(int error, const char *descr)
 {
 	std::cerr << "Error " << error << " : " << descr << std::endl;
+}
+
+void Window::callback_framebuffer_size(GLFWwindow *w, int width, int height)
+{
+	glViewport(0, 0, width, height);
+	(void)w;
 }
