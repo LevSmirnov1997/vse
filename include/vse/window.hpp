@@ -23,4 +23,6 @@ private:
 	GLFWwindow * m_w;
 
 	static void callback_error(int error, const char *descr);
+
+	static void callback_framebuffer_size(GLFWwindow *w, int width, int height);
 };
