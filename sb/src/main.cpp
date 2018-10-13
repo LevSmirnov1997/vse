@@ -1,10 +1,9 @@
 #include <iostream>
 #include <vector>
-#include <vse/window.hpp>
-#include <vse/input.hpp>
-#include <vse/program.hpp>
-#include <vse/shapes.hpp>
-#include <vse/ecs.hpp>
+#include <cstring>
+#include <al/gl.hpp>
+#include <al/ecs.hpp>
+#include <al/math.hpp>
 
 struct Model
 {
@@ -27,9 +26,20 @@ public:
 	}
 };
 
-
-int main()
+std::string get_program_path(const char *arg)
 {
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+	static const char slash = '\\';
+#else
+	static const char slash = '/';
+#endif
+	const char *end = std::strrchr(arg, slash);
+	return { arg, size_t(end - arg) };
+}
+
+int main(int argc, char **argv)
+{
+	const std::string current_path = get_program_path(argv[0]);
 	try {
 		Window w{ 800, 800, "bery good" };
 		w.set_pos(400, 100);
@@ -42,10 +52,11 @@ int main()
 		});
 
 		program p = program::create_progarm({
-				{ GL_VERTEX_SHADER,   "../shaders/basic.sv" },
-				{ GL_FRAGMENT_SHADER, "../shaders/basic.sf" }
+				{ GL_VERTEX_SHADER,   { current_path + "/shaders/basic.sv" } },
+				{ GL_FRAGMENT_SHADER, { current_path + "/shaders/basic.sf" } }
 			}
 		);
+		std::cerr << p.info_log() << std::endl;
 		if (!p.valid()) {
 			std::cerr << p.info_log() << std::endl;
 			throw;
@@ -71,5 +82,6 @@ int main()
 		std::cerr << e.what() << std::endl;
 	}
 	return 0;
+	(void)argc;
 }
 

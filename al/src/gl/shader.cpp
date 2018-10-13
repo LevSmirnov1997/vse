@@ -1,6 +1,7 @@
 #include "shader.hpp"
 #include <glad/glad.h>
 #include <fstream>
+#include <cerrno>
 
 shader::shader(unsigned type)
 	: m_id(glCreateShader(type)),
@@ -43,7 +44,7 @@ bool shader::compile() const
 	glCompileShader(m_id);
 	GLint success;
 	glGetShaderiv(m_id, GL_COMPILE_STATUS, &success);
-	return success != 0;
+	return success && this->valid();
 }
 
 void shader::set_source(const std::string &src) const
@@ -55,6 +56,10 @@ void shader::set_source(const std::string &src) const
 void shader::load_source(const std::string &path) const
 {
 	std::ifstream is(path);
+	if (!is) {
+		 auto err = std::string("Invalid shader source file: " + path + '\n' + std::strerror(errno));
+		 throw std::runtime_error(err.c_str());
+	}
 	this->set_source(std::string(std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>()));
 }
 

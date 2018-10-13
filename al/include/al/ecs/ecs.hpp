@@ -1,6 +1,6 @@
 #pragma once
-#include <vse/component_manager.hpp>
-#include <vse/system_manager.hpp>
+#include "component_manager.hpp"
+#include "system_manager.hpp"
 #include <algorithm>
 #include <unordered_set>
 

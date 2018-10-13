@@ -1,5 +1,5 @@
 #pragma once
-#include <vse/shader.hpp>
+#include "shader.hpp"
 #include <vector>
 
 class program
@@ -31,7 +31,7 @@ public:
 
 	std::string info_log() const;
 
-	using shader_args = std::pair<unsigned, const char *>;
+	using shader_args = std::pair<unsigned, const std::string&>;
 	static program create_progarm(const std::vector<shader_args> &&args);
 
 private:

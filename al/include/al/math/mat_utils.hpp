@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vse/vec2.hpp>
-#include <vse/mat4.hpp>
+#include "vec2.hpp"
+#include "mat4.hpp"
 
 mat4 scale(const mat4& transf, const vec2& sc);
 mat4 rotate(const mat4& transf, float rt);
