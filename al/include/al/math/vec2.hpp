@@ -1,6 +1,4 @@
-//#pragma once //OR
-#ifndef VEC2_HPP
-#define VEC2_HPP
+#pragma once
 
 class vec2 {
 private:
@@ -26,5 +24,3 @@ public:
 float dot(const vec2 &lhs, const vec2 &rhs); //Dot product of vectors
 vec2 dot(const vec2 &lhs, float rhs); //Dot product of vector & scalar    
 float cross(const vec2 &lhs, const vec2 &rhs); //Cross product of vectors
-
-#endif

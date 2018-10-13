@@ -1,68 +1,8 @@
 cmake_minimum_required(VERSION 3.6)
 project (vse)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-add_subdirectory(3rd_party)
-find_package(OpenGL REQUIRED)
-
-set(GLFW_ROOT_DIR "3rd_party/glfw")
-if(WIN32)
-	set(GLFW_USE_STATIC_LIBS "1")
-endif()
-find_package(GLFW REQUIRED)
-include_directories(${GLFW_INCLUDE_DIR})
-
-set (HEADERS
-	"include/vse/window.hpp"
-	"include/vse/input.hpp"
-	"include/vse/vec2.hpp"
-    "include/vse/mat4.hpp"
-    "include/vse/mat_utils.hpp"
-	"include/vse/shader.hpp"
-	"include/vse/program.hpp"
-	"include/vse/buffer.hpp"
-	"include/vse/vao.hpp"
-	"include/vse/shapes.hpp"
-	"include/vse/component_manager.hpp"
-	"include/vse/system_manager.hpp"
-	"include/vse/ecs.hpp"
-)
-
-set (SOURCES 
-  "src/main.cpp"
-  "src/vec2.cpp"
-  "src/mat4.cpp"
-  "src/mat_utils.cpp"
-  "src/input.cpp"
-  "src/window.cpp"
-  "src/shader.cpp"
-  "src/program.cpp"
-  "src/buffer.cpp"
-  "src/vao.cpp"
-  "src/shapes.cpp"
-  "src/system_manager.cpp"
-  "src/ecs.cpp"
-)
-
-# just so they appear in VS project
-set (SHADERS
-	"shaders/basic.sv"
-	"shaders/basic.sf"
-)
-
-add_executable(vse ${HEADERS} ${SOURCES} ${SHADERS})
-
-
-if (MSVC)
-    target_compile_options (vse PRIVATE /W4)
-	target_link_libraries(vse glad ${GLFW_LIBRARIES})
-else()
-    target_compile_options (vse PRIVATE -std=c++14 -Wall -Wextra -Wpedantic -Wfatal-errors)
-	target_link_libraries(vse glad glfw3 dl pthread X11 m)
-endif()
-
-target_include_directories (vse PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/vse)
-target_include_directories (vse PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+add_subdirectory(al)
+add_subdirectory(sb)
 
 # This will set vse as the startup project for the *.sln solution
-set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT vse)
+set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT sb)

@@ -1,4 +1,4 @@
-#include "vse/mat4.hpp"
+#include "mat4.hpp"
 #include <algorithm>
 
 mat4::mat4() 
