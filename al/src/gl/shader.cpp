@@ -1,6 +1,7 @@
 #include "shader.hpp"
 #include <glad/glad.h>
 #include <fstream>
+#include <cstring>
 #include <cerrno>
 
 shader::shader(unsigned type)
