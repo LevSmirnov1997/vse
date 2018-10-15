@@ -1,5 +1,6 @@
 #pragma once
-#include<mat_utils.hpp>
+#include <iostream>
+#include "al/math/mat_utils.hpp"
 
 
 class Transform 
@@ -26,6 +27,8 @@ public:
 	{
 		return m_pos;
 	}
+
+	Transform() = default;
 
 private:
 

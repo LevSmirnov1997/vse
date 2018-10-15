@@ -1,11 +1,10 @@
-#include "components/transform.hpp"
-#include "TransformationSystem.h"
+#include "TransformationSystem.hpp"
 
-void TransformationSystem::update(ecs &ens) override
+void TransformationSystem::update(ecs &ens)
 {
 	for (const auto &e : ens.with<Transform>())
 	{
-		while (m_keyque.back())
+		while (!m_keyque.empty())
 		{
 			if (m_keyque.back() == GLFW_KEY_UP)
 				e.get<Transform>().scale(2, 3);

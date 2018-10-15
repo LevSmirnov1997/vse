@@ -3,13 +3,17 @@ project (sb)
 
 set (SOURCES
   "src/main.cpp"
-  "src/systems/"
-  "src/components/"
+  "src/components/transform.hpp"
+  "src/systems/TransformationSystem.cpp"
+  "src/systems/TransformationSystem.hpp"
 )
+
 file (GLOB SHADERS "shaders/*")
+
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${SHADERS})
 target_link_libraries(${PROJECT_NAME} al)
+include_directories("src/components")
 
 if (MSVC)
     target_compile_options (${PROJECT_NAME}  PRIVATE /W4)
