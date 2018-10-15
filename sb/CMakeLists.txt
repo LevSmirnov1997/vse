@@ -3,6 +3,8 @@ project (sb)
 
 set (SOURCES
   "src/main.cpp"
+  "src/systems/"
+  "src/components/"
 )
 file (GLOB SHADERS "shaders/*")
 
