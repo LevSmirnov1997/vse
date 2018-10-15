@@ -4,7 +4,6 @@
 #include <al/gl.hpp>
 #include <al/ecs.hpp>
 #include <al/math.hpp>
-#include "components/transform.hpp"
 #include "systems/TransformationSystem.hpp"
 
 struct Model
