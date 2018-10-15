@@ -6,7 +6,7 @@ void TransformationSystem::update(ecs &ens)
 	{
 		while (!m_keyque.empty())
 		{
-			if (m_keyque.back() == GLFW_KEY_UP)
+			if (m_keyque.front() == GLFW_KEY_UP)
 				e.get<Transform>().scale(2, 3);
 			else if (m_keyque.front() == GLFW_KEY_LEFT)
 				e.get<Transform>().move(1, -3);
