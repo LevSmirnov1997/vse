@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 
 		auto rect = e.create();
 		rect.add<Model>(std::make_unique<Rect>());
-		rect.add<Transform>();
+		rect.add<transform>();
 
 		glfwSwapInterval(1);
 		while (w.is_open())

@@ -2,8 +2,8 @@
 
 #include <queue>
 #include <al/gl.hpp>
-#include "al/ecs.hpp"
-#include "transform.hpp"
+#include <al/ecs.hpp>
+#include "components/transform.hpp"
 
 
 
@@ -17,5 +17,4 @@ public:
 private:
 
 	std::queue<int> m_keyque;
-
 };

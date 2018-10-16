@@ -13,7 +13,7 @@ file (GLOB SHADERS "shaders/*")
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${SHADERS})
 target_link_libraries(${PROJECT_NAME} al)
-include_directories("src/components")
+target_include_directories(${PROJECT_NAME} PRIVATE "src")
 
 if (MSVC)
     target_compile_options (${PROJECT_NAME}  PRIVATE /W4)
