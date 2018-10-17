@@ -4,28 +4,8 @@
 #include <al/gl.hpp>
 #include <al/ecs.hpp>
 #include <al/math.hpp>
-#include "systems/TransformationSystem.hpp"
-
-struct Model
-{
-	std::unique_ptr<shape> data;
-};
-
-class Renderer : public System
-{
-public:
-	void update(ecs &ens) override
-	{
-		for (const auto &e : ens.with<Model>())
-		{
-			const auto &r = e.get<Model>().data;
-			r->bind();
-			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
-			glDrawElements(GL_TRIANGLES, r->size(), GL_UNSIGNED_INT, 0);
-		}
-	}
-};
+#include <systems/TransformationSystem.hpp>
+#include <systems/RenderSystem.hpp>
 
 std::string get_program_path(const char *arg)
 {
@@ -65,11 +45,11 @@ int main(int argc, char **argv)
 		p.use();
 
 		ecs e;
-		e.add_system(std::make_unique<Renderer>());
+		e.add_system(std::make_unique<RenderSystem>(p));
 		e.add_system(std::make_unique<TransformationSystem>());
 
 		auto rect = e.create();
-		rect.add<Model>(std::make_unique<Rect>());
+		rect.add<model>(std::make_unique<Rect>());
 		rect.add<transform>();
 
 		glfwSwapInterval(1);
