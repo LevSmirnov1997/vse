@@ -4,6 +4,7 @@
 #include <al/gl.hpp>
 #include <al/ecs.hpp>
 #include <al/math.hpp>
+#include "systems/TransformationSystem.hpp"
 
 struct Model
 {
@@ -65,9 +66,11 @@ int main(int argc, char **argv)
 
 		ecs e;
 		e.add_system(std::make_unique<Renderer>());
+		e.add_system(std::make_unique<TransformationSystem>());
 
 		auto rect = e.create();
 		rect.add<Model>(std::make_unique<Rect>());
+		rect.add<transform>();
 
 		glfwSwapInterval(1);
 		while (w.is_open())
