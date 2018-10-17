@@ -24,10 +24,18 @@ struct event_scroll
 	double offset;
 };
 
+/* Window width and heigth */
+struct event_resize
+{
+	int w;
+	int h;
+};
+
 using cb_id = unsigned long;
-using cb_key = std::function<void(event_key e)>;
-using cb_mouse = std::function<void(event_mouse e)>;
-using cb_scroll = std::function<void(event_scroll e)> ;
+using cb_key = std::function<void(event_key)>;
+using cb_mouse = std::function<void(event_mouse)>;
+using cb_scroll = std::function<void(event_scroll)>;
+using cb_resize = std::function<void(event_resize)>;
 
 class Input
 {
@@ -44,6 +52,8 @@ public:
 
 	cb_id on_scroll(cb_scroll cb);
 
+	cb_id on_resize(cb_resize cb);
+
 	void remove_cb(cb_id id);
 
 private:
@@ -59,8 +69,11 @@ private:
 
 	void callback_scroll(double xoffset, double yofsset);
 
+	void callback_resize(int w, int h);
+
 	std::unordered_map<cb_id, cb_key>    m_cb_keys;
 	std::unordered_map<cb_id, cb_mouse>  m_cb_mouse;
 	std::unordered_map<cb_id, cb_scroll> m_cb_scroll;
+	std::unordered_map<cb_id, cb_resize> m_cb_resize;
 	cb_id m_next_id = 0;
 };

@@ -65,3 +65,18 @@ void Input::callback_scroll(double /*xoffset*/, double yofsset)
 		elem.second(e);
 	}
 }
+
+cb_id Input::on_resize(cb_resize cb)
+{
+	m_cb_resize.emplace(m_next_id, cb);
+	return m_next_id++;
+}
+
+void Input::callback_resize(int w, int h)
+{
+	event_resize e{ w, h };
+	for (const auto &elem : m_cb_resize)
+	{
+		elem.second(e);
+	}
+}
