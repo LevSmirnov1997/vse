@@ -59,6 +59,11 @@ bool program::valid() const
 	return glIsProgram(m_id);
 }
 
+void program::set_mat4(const std::string &name, const float *m) const
+{
+	glUniformMatrix4fv(glGetUniformLocation(m_id, name.c_str()), 1, GL_TRUE, m);
+}
+
 std::string program::info_log() const
 {
 	GLint size = 0;
