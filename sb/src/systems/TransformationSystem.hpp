@@ -1,6 +1,5 @@
 #pragma once
 #include <queue>
-#include <al/gl.hpp>
 #include <al/ecs.hpp>
 #include "components/transform.hpp"
 

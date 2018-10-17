@@ -1,5 +1,6 @@
 #include "TransformationSystem.hpp"
 #include <al/math/mat_utils.hpp>
+#include <al/gl.hpp>
 
 void TransformationSystem::update(ecs &ens)
 {
@@ -8,15 +9,15 @@ void TransformationSystem::update(ecs &ens)
 		while (!m_keyque.empty())
 		{
 			if (m_keyque.front() == GLFW_KEY_UP)
-				math::translate(e.get<transform>().m_pos, vec2(0, 1.0f));
+				math::translate(e.get<transform>().transf, vec2(0, 1.0f));
 			else if (m_keyque.front() == GLFW_KEY_DOWN)
-				math::translate(e.get<transform>().m_pos, vec2(0, -1.0f));
+				math::translate(e.get<transform>().transf, vec2(0, -1.0f));
 			else if(m_keyque.front() == GLFW_KEY_LEFT)
-				math::translate(e.get<transform>().m_pos, vec2(-1.0f, 0));
+				math::translate(e.get<transform>().transf, vec2(-1.0f, 0));
 			else if (m_keyque.front() == GLFW_KEY_RIGHT)
-				math::translate(e.get<transform>().m_pos, vec2(1.0f, 0));
+				math::translate(e.get<transform>().transf, vec2(1.0f, 0));
 			else if (m_keyque.front() == GLFW_KEY_RIGHT)
-				math::translate(e.get<transform>().m_pos, vec2(1.0f, 0));
+				math::translate(e.get<transform>().transf, vec2(1.0f, 0));
 			m_keyque.pop();
 		}
 	}
