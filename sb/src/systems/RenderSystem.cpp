@@ -4,10 +4,13 @@
 #include <al/math.hpp>
 #include <components/transform.hpp>
 
-RenderSystem::RenderSystem(const program &p)
+RenderSystem::RenderSystem(const program &p, int w, int h)
 	: m_p(p),
-	  m_projection(math::ortho(-1, 1, -1, 1, -1, 1))
+	  m_projection(math::ortho(0, w, h, 0, -1, 1))
 {
+	Input::get().on_resize([this](event_resize e){
+		this->m_projection = math::ortho(0, e.w, 0, e.h, -1, 1);
+	});
 }
 
 void RenderSystem::update(ecs &e)

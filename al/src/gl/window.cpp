@@ -4,6 +4,7 @@
 #include <exception>
 
 Window::Window(int width, int height, const char *title, bool fullscreen)
+	: m_width(width), m_height(height)
 {
 	if (!glfwInit()) {
 		throw std::runtime_error("Cannot ininialize glfw context\n");
@@ -14,8 +15,8 @@ Window::Window(int width, int height, const char *title, bool fullscreen)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	m_w = fullscreen ?
-		glfwCreateWindow(width, height, title, glfwGetPrimaryMonitor(), NULL) :
-		glfwCreateWindow(width, height, title, NULL, NULL);
+		glfwCreateWindow(m_width, m_height, title, glfwGetPrimaryMonitor(), NULL) :
+		glfwCreateWindow(m_width, m_height, title, NULL, NULL);
 
 	if (m_w == NULL) {
 		throw std::runtime_error("Failed to create a window");
@@ -43,7 +44,7 @@ Window::Window(int width, int height, const char *title, bool fullscreen)
 	Input::get().on_resize([this](event_resize e) {
 		this->callback_framebuffer_size(e.w, e.h);
 	});
-	this->callback_framebuffer_size(width, height);
+	this->callback_framebuffer_size(m_width, m_height);
 }
 
 Window::~Window()
@@ -69,5 +70,7 @@ void Window::callback_error(int error, const char *descr)
 
 void Window::callback_framebuffer_size(int width, int height)
 {
-	glViewport(0, 0, width, height);
+	m_width = width;
+	m_height = height;
+	glViewport(0, 0, m_width, m_height);
 }

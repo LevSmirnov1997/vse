@@ -9,11 +9,11 @@ class RenderSystem : public System
 public:
 	RenderSystem() = delete;
 
-	RenderSystem(const program &p);
+	RenderSystem(const program &p, int w, int h);
 
 	void update(ecs &e) override;
 
 private:
 	const program &m_p;
-	const mat4 m_projection;
+	mat4 m_projection;
 };

@@ -45,12 +45,14 @@ int main(int argc, char **argv)
 		p.use();
 
 		ecs e;
-		e.add_system(std::make_unique<RenderSystem>(p));
+		e.add_system(std::make_unique<RenderSystem>(p, w.get_w(), w.get_h()));
 		e.add_system(std::make_unique<TransformationSystem>());
 
 		auto rect = e.create();
-		rect.add<model>(std::make_unique<Rect>());
+		rect.add<model>(std::make_unique<Triangle>());
 		rect.add<transform>();
+		auto & t = rect.get<transform>().transf;
+		t = math::translate(t, vec2(100, 100));
 
 		glfwSwapInterval(1);
 		while (w.is_open())

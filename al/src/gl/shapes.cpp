@@ -16,9 +16,9 @@ shape::shape(const std::vector<float> &v, const std::vector<unsigned> &i)
 
 Triangle::Triangle()
     : shape({
-            -0.5f, -0.5f, // left  
-            0.5f, -0.5f, // right 
-            0.0f,  0.5f // top   
+			-50.f, 50.f, // left
+			 50.f, 50.f, // right
+			 0.f, -50.0f // top
         },
         {
             0, 1, 2
@@ -28,14 +28,14 @@ Triangle::Triangle()
 
 Rect::Rect()
     : shape({
-           -0.5,  0.5, 
-            0.5,  0.5,
-           -0.5f, -0.5f,
-            0.5f, -0.5f
+            -50.f,   50.f, 
+             50.f,  -50.f,
+            -50.f,  -50.f,
+             50.f,   50.f
         },
         {
             0, 1, 2,
-            1, 2, 3
+            1, 0, 3
         })
 {
 }

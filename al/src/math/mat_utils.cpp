@@ -9,7 +9,7 @@ mat4 math::scale(const mat4& transf, const vec2& sc) {
 	t_arr[5] = sc.get_y();
 	t_arr[10] = 1.0f;
 	t_arr[15] = 1.0f;
-	return math::mult(mat4(t_arr), transf);
+	return math::mult(transf, mat4(t_arr));
 }
 
 mat4 math::rotate(const mat4& transf, float rt, vec2 around) {
