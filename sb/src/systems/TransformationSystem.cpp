@@ -9,16 +9,29 @@ void TransformationSystem::update(ecs &ens)
 		while (!m_keyque.empty())
 		{
 			mat4 &t = e.get<transform>().transf;
+			if (m_keyque.front() == GLFW_KEY_Q)
+				t = math::rotate(t, 6);
+			if (m_keyque.front() == GLFW_KEY_E)
+				t = math::rotate(t, -6);
+
 			if (m_keyque.front() == GLFW_KEY_UP)
 				t = math::translate(t, vec2(0, 0.1f));
-			else if (m_keyque.front() == GLFW_KEY_DOWN)
+			if (m_keyque.front() == GLFW_KEY_DOWN)
 				t = math::translate(t, vec2(0, -0.1f));
-			else if(m_keyque.front() == GLFW_KEY_LEFT)
+			if (m_keyque.front() == GLFW_KEY_LEFT)
 				t = math::translate(t, vec2(-0.1f, 0));
-			else if (m_keyque.front() == GLFW_KEY_RIGHT)
+			if (m_keyque.front() == GLFW_KEY_RIGHT)
 				t = math::translate(t, vec2(0.1f, 0));
-			else if (m_keyque.front() == GLFW_KEY_RIGHT)
-				t = math::translate(t, vec2(0.1f, 0));
+
+			if (m_keyque.front() == GLFW_KEY_S)
+				t = math::scale(t, vec2(1, 0.9f));
+			if (m_keyque.front() == GLFW_KEY_W)
+				t = math::scale(t, vec2(1, 1.1f));
+			if (m_keyque.front() == GLFW_KEY_A)
+				t = math::scale(t, vec2(0.9, 1));
+			if (m_keyque.front() == GLFW_KEY_D)
+				t = math::scale(t, vec2(1.1, 1));
+
 			m_keyque.pop();
 		}
 	}
@@ -27,7 +40,7 @@ void TransformationSystem::update(ecs &ens)
 TransformationSystem::TransformationSystem()
 {
 	Input::get().on_key([this](event_key key) {
-		if (key.action == GLFW_PRESS)
+		if (key.action == GLFW_PRESS || key.action == GLFW_REPEAT)
 			m_keyque.push(key.key);
 	});
 }

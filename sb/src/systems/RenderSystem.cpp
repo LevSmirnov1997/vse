@@ -6,7 +6,7 @@
 
 RenderSystem::RenderSystem(const program &p)
 	: m_p(p),
-	  m_projection(math::ortho(-1, 1, 1, -1, -1, 1))
+	  m_projection(math::ortho(-1, 1, -1, 1, -1, 1))
 {
 }
 
