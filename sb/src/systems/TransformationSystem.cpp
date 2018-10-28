@@ -9,9 +9,9 @@ void TransformationSystem::update(ecs &ens)
 		while (!m_keyque.empty())
 		{
 			mat4 &t = e.get<transform>().transf;
-			if (m_keyque.front() == GLFW_KEY_Q)
+			if (m_keyque.front() == GLFW_KEY_E)
 				t = math::rotate(t, 6);
-			else if (m_keyque.front() == GLFW_KEY_E)
+			else if (m_keyque.front() == GLFW_KEY_Q)
 				t = math::rotate(t, -6);
 
 			else if (m_keyque.front() == GLFW_KEY_DOWN)

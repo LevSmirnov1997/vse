@@ -9,7 +9,7 @@ RenderSystem::RenderSystem(const program &p, int w, int h)
 	  m_projection(math::ortho(0, w, h, 0, -1, 1))
 {
 	Input::get().on_resize([this](event_resize e){
-		this->m_projection = math::ortho(0, e.w, 0, e.h, -1, 1);
+		this->m_projection = math::ortho(0, e.w, e.h, 0, -1, 1);
 	});
 }
 
