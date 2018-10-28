@@ -19,10 +19,16 @@ public:
 
 	void swap_buffers() const { glfwSwapBuffers(m_w); }
 
+	int get_w() const { return m_width; }
+
+	int get_h() const { return m_height; }
+
 private:
 	GLFWwindow * m_w;
+	int m_width;
+	int m_height;
 
 	static void callback_error(int error, const char *descr);
 
-	static void callback_framebuffer_size(GLFWwindow *w, int width, int height);
+	void callback_framebuffer_size(int width, int height);
 };

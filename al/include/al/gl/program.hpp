@@ -29,6 +29,8 @@ public:
 
 	bool valid() const;
 
+	void set_mat4(const std::string &name, const float *m) const;
+
 	std::string info_log() const;
 
 	using shader_args = std::pair<unsigned, const std::string&>;
