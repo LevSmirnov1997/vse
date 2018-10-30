@@ -8,5 +8,5 @@ public:
     mat4(float arr[16]);
     ~mat4() = default;
 
-    const float *const get_values() const { return values; }
+    const float * get_values() const { return values; }
 };
