@@ -10,9 +10,9 @@ void TransformationSystem::update(ecs &ens)
 		{
 			mat4 &t = e.get<transform>().transf;
 			if (m_keyque.front() == GLFW_KEY_E)
-				t = math::rotate(t, 6);
+				e.get<transform>().rotate(6);
 			else if (m_keyque.front() == GLFW_KEY_Q)
-				t = math::rotate(t, -6);
+				e.get<transform>().rotate(-6);
 
 			else if (m_keyque.front() == GLFW_KEY_DOWN)
 				t = math::translate(t, vec2(0, 50));
@@ -31,6 +31,11 @@ void TransformationSystem::update(ecs &ens)
 				t = math::scale(t, vec2(0.9, 1));
 			else if (m_keyque.front() == GLFW_KEY_D)
 				t = math::scale(t, vec2(1.1, 1));
+
+            else if (m_keyque.front() == GLFW_KEY_KP_8)
+                e.get<transform>().move(10);
+            else if (m_keyque.front() == GLFW_KEY_KP_2)
+                e.get<transform>().move(-10);
 
 			m_keyque.pop();
 		}
