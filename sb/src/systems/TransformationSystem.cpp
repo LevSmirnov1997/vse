@@ -1,7 +1,6 @@
 #include "TransformationSystem.hpp"
 #include <al/math/mat_utils.hpp>
 #include <al/gl.hpp>
-#include <iostream>
 
 void TransformationSystem::update(ecs &ens)
 {

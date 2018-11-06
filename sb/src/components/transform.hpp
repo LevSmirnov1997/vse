@@ -2,7 +2,6 @@
 #include <al/math/mat4.hpp>
 #include <al/math/mat_utils.hpp>
 #include <cmath>
-const float PI = 3.141592653f;
 
 struct transform 
 {
@@ -10,7 +9,7 @@ struct transform
     float angle = 0;
     void move(float step)
     {
-        float rad = angle * PI / 180.0f;
+        float rad = math::radians(angle);
         float x = (step * sin(rad));
         float y = -fabs(step * cos(rad));
         if (cos(rad) < 0)

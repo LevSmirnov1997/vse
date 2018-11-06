@@ -65,3 +65,13 @@ mat4 math::ortho(float left, float right, float bottom, float top, float near, f
 	projection[15] = 1.0f;
 	return { projection };
 }
+
+float math::radians(float degrees)
+{
+	return degrees * (PI / 180.f);
+}
+
+float math::degrees(float radians)
+{
+	return radians * (180.f / PI);
+}
