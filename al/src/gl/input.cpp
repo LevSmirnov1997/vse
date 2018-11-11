@@ -5,6 +5,12 @@ Input& Input::get()
 	static Input inst;
 	return inst;
 }
+Input::Input()
+{
+	this->on_mouse([this](event_mouse e) {
+		this->m_last_mouse = e;
+	});
+}
 
 cb_id Input::on_key(cb_key cb)
 {
@@ -79,4 +85,9 @@ void Input::callback_resize(int w, int h)
 	{
 		elem.second(e);
 	}
+}
+
+event_mouse Input::get_mouse_pos() const
+{
+	return m_last_mouse;
 }

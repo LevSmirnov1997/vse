@@ -56,9 +56,9 @@ mat4 math::mult(const mat4& lhs, const mat4& rhs) {
 mat4 math::ortho(float left, float right, float bottom, float top, float near, float far)
 {
 	float projection[16] = { 0.0f };
-	projection[0] = 2.0 / (right - left);
-	projection[5] = 2.0 / (top - bottom);
-	projection[10] = -2.0 / (far - near);
+	projection[0] = 2.0f / (right - left);
+	projection[5] = 2.0f / (top - bottom);
+	projection[10] = -2.0f / (far - near);
 	projection[3] = -(right + left) / (right - left);
 	projection[7] = -(top + bottom) / (top - bottom);
 	projection[11] = -(far + near) / (far - near);

@@ -13,6 +13,16 @@ vec2 vec2::operator-(const vec2 &rhs) const {
     return vec2(_x - rhs.get_x(), _y - rhs.get_y());
 }
 
+vec2 vec2::operator+=(const vec2 &rhs) {
+	*this = *this + rhs;
+	return *this;
+}
+
+vec2 vec2::operator-=(const vec2 &rhs) {
+	*this = *this - rhs;
+	return *this;
+}
+
 float vec2::magn() const {
     return sqrt(pow(_x, 2.0) + pow(_y, 2.0));
 }
