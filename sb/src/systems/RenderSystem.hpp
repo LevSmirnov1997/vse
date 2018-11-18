@@ -19,4 +19,5 @@ private:
 	camera m_cam;
 	bool is_moving = false;
 	vec2 m_last_mouse;
+	float m_w, m_h;
 };

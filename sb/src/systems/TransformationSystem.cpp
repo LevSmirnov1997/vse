@@ -32,10 +32,10 @@ void TransformationSystem::update(ecs &ens)
 			else if (m_keyque.front() == GLFW_KEY_D)
 				t = math::scale(t, vec2(1.1, 1));
 
-            else if (m_keyque.front() == GLFW_KEY_KP_8)
-                e.get<transform>().move(10);
-            else if (m_keyque.front() == GLFW_KEY_KP_2)
-                e.get<transform>().move(-10);
+			else if (m_keyque.front() == GLFW_KEY_KP_8)
+				e.get<transform>().move(10);
+			else if (m_keyque.front() == GLFW_KEY_KP_2)
+				e.get<transform>().move(-10);
 
 			m_keyque.pop();
 		}

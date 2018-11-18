@@ -3,17 +3,21 @@
 #include <al/gl.hpp>
 #include <al/math.hpp>
 #include <components/transform.hpp>
+#include <iostream>
 
 RenderSystem::RenderSystem(const program &p, int w, int h)
 	: m_p(p),
-	  m_cam(w, h)
+	  m_cam(w, h),
+	  m_w(w), m_h(h)
 {
 	Input::get().on_resize([this](event_resize e){
 		this->m_cam.resize(e.w, e.h);
+		this->m_w = e.w;
+		this->m_h = e.h;
 	});
 
 	Input::get().on_scroll([this](event_scroll e){
-		this->m_cam.zoom(-20.f * (float)e.offset);
+		this->m_cam.scale(-20.f * (float)e.offset);
 	});
 
 	Input::get().on_key([this](event_key e){
@@ -31,7 +35,6 @@ RenderSystem::RenderSystem(const program &p, int w, int h)
 	});
 }
 
-
 void RenderSystem::update(ecs &e)
 {
 	m_p.use();
@@ -46,7 +49,11 @@ void RenderSystem::update(ecs &e)
 			m_cam.move(diff);
 			m_last_mouse = { (float)cur_pos.x, (float)cur_pos.y };
 		}
+		auto p = Input::get().get_mouse_pos();
 
+		en.get<transform>().seek(m_cam.world_to_view({ (float)p.x, (float)p.y }));
+
+		const float *v = m_cam.get().get_values();
 		m_p.set_mat4("MVP", math::mult(m_cam.get(), t).get_values());
 
 		m.ptr->bind();

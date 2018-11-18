@@ -24,9 +24,9 @@ class event_manager
 	template <typename T>
 	void subscribe(cb_t<T> func) 
 	{
-			m_cbs[details::type_id<T>].push_back([&, func](const void* val) {
-				func(*reinterpret_cast<const T*>(val));
-			});
+		m_cbs[details::type_id<T>].push_back([&, func](const void* val) {
+			func(*reinterpret_cast<const T*>(val));
+		});
 	}
 
 	template <typename T>

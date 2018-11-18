@@ -6,7 +6,7 @@ camera::camera(int width, int height)
 	this->update();
 }
 
-void camera::zoom(float zoom)
+void camera::scale(float zoom)
 {
 	m_scale += zoom;
 	this->update();
@@ -43,4 +43,16 @@ void camera::update()
 	float scale_x = m_scale * (m_w / (float)m_h);
 	float scale_y = m_scale;
 	m_view = math::ortho(x-scale_x, m_w + x + scale_x, m_h + y + scale_y, y-scale_y, -1, 1);
+}
+
+vec2 camera::world_to_view(vec2 pos) const
+{
+	float scale_x = m_scale * (m_w / (float)m_h);
+	float x = pos.get_x();
+	float y = pos.get_y();
+
+	return {
+		x * ((m_w + 2.f*scale_x) / m_w) - scale_x - m_position.get_x(),
+		y * ((m_h + 2.f*m_scale) / m_h) - m_scale - m_position.get_y()
+	};
 }
