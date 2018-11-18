@@ -56,8 +56,10 @@ public:
 
 	void remove_cb(cb_id id);
 
+	event_mouse get_mouse_pos() const;
+
 private:
-	Input() = default;
+	Input();
 
 	friend class Window;
 
@@ -76,4 +78,5 @@ private:
 	std::unordered_map<cb_id, cb_scroll> m_cb_scroll;
 	std::unordered_map<cb_id, cb_resize> m_cb_resize;
 	cb_id m_next_id = 0;
+	event_mouse m_last_mouse = { 0, 0 };
 };

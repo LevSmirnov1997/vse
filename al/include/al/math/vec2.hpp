@@ -18,6 +18,8 @@ public:
     
     vec2 operator+(const vec2 &rhs) const; //Adding vectors
     vec2 operator-(const vec2 &rhs) const; //Subtracting vectors
+	vec2 operator+=(const vec2 &rhs);
+	vec2 operator-=(const vec2 &rhs);
     float magn() const; //Magnitude of vector
 };
 
