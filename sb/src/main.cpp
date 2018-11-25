@@ -6,6 +6,7 @@
 #include <al/math.hpp>
 #include <systems/TransformationSystem.hpp>
 #include <systems/RenderSystem.hpp>
+#include "behaviours.hpp"
 
 std::string get_program_path(const char *arg)
 {
@@ -17,6 +18,29 @@ std::string get_program_path(const char *arg)
 	const char *end = std::strrchr(arg, slash);
 	return { arg, size_t(end - arg) };
 }
+
+
+class CursorBehaviorSystem : public System
+{
+public:
+	void update(ecs &e) override
+	{
+		camera *cam = nullptr;
+		for (auto en : e.with<camera>())
+		{
+			cam = &en.get<camera>();
+			break;
+		}
+		if (nullptr == cam)
+			return;
+
+		auto p = Input::get().get_mouse_pos();
+		for (auto en : e.with<transform>())
+		{
+			seek(en.get<transform>(), cam->world_to_view({ (float)p.x, (float)p.y }));
+		}
+	}
+};
 
 int main(int argc, char **argv)
 {
@@ -45,14 +69,23 @@ int main(int argc, char **argv)
 		p.use();
 
 		ecs e;
-		e.add_system(std::make_unique<RenderSystem>(p, w.get_w(), w.get_h()));
+		e.add_system(std::make_unique<RenderSystem>(e, p, w.get_w(), w.get_h()));
 		e.add_system(std::make_unique<TransformationSystem>());
+		e.add_system(std::make_unique<CursorBehaviorSystem>());
 
 		auto rect = e.create();
 		rect.add<model>(std::make_unique<Triangle>());
-		rect.add<transform>();
+		rect.add<transform>(mat4(), 0.f, vec2(), 10.f, 10.f);
 		auto & t = rect.get<transform>().transf;
 		t = math::translate(t, vec2(100, 100));
+
+		{
+			auto r = e.create();
+			r.add<model>(std::make_unique<Rect>());
+			r.add<transform>(mat4(), 0.f, vec2(), 15.f, 10.f);
+			auto & t = r.get<transform>().transf;
+			t = math::translate(t, vec2(500, 100));
+		}
 
 		glfwSwapInterval(1);
 		while (w.is_open())

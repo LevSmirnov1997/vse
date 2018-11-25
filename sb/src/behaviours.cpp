@@ -12,8 +12,7 @@ void seek(transform &t, vec2 dst)
 	t.velocity = math::truncate(t.velocity + accel, { t.max_speed, t.max_speed });
 	t.transf = math::translate(t.transf, t.velocity);
 
-	vec2 vel = t.velocity;
 	t.transf = math::rotate(t.transf, -t.angle);
-	t.angle = math::degrees(std::atan2(vel.get_y(), vel.get_x())) + 90.f;
+	t.angle = math::degrees(std::atan2(t.velocity.get_y(), t.velocity.get_x())) + 90.f;
 	t.transf = math::rotate(t.transf, t.angle);
 }
