@@ -22,7 +22,32 @@ std::string get_program_path(const char *arg)
 
 class CursorBehaviorSystem : public System
 {
+	enum mode
+	{
+		mode_seek = 1,
+		mode_flee,
+		mode_wander,
+	};
+
+	mode m_mode = mode_seek;
+
 public:
+	CursorBehaviorSystem()
+	{
+		Input::get().on_key(
+			[this](event_key e) {
+				if (e.action != GLFW_PRESS)
+					return;
+				if (e.key == GLFW_KEY_1)
+					this->m_mode = mode_seek;
+				else if (e.key == GLFW_KEY_2)
+					this->m_mode = mode_flee;
+				else if (e.key == GLFW_KEY_3)
+					this->m_mode = mode_wander;
+		    }
+		);
+	}
+
 	void update(ecs &e) override
 	{
 		camera *cam = nullptr;
@@ -35,9 +60,23 @@ public:
 			return;
 
 		auto p = Input::get().get_mouse_pos();
+		vec2 cursor_pos { cam->world_to_view({ (float)p.x, (float)p.y }) };
 		for (auto en : e.with<transform>())
 		{
-			seek(en.get<transform>(), cam->world_to_view({ (float)p.x, (float)p.y }));
+			switch (m_mode)
+			{
+			case CursorBehaviorSystem::mode_seek:
+				seek(en.get<transform>(), cursor_pos);
+				break;
+			case CursorBehaviorSystem::mode_flee:
+				flee(en.get<transform>(), cursor_pos);
+				break;
+			case CursorBehaviorSystem::mode_wander:
+				wander(en.get<transform>());
+				break;
+			default:
+				break;
+			}
 		}
 	}
 };

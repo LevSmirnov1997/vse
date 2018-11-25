@@ -1,8 +1,6 @@
 #pragma once
 #include <al/math/mat4.hpp>
-#include <al/math/mat_utils.hpp>
-#include <cmath>
-#include <iostream>
+#include <al/math/vec2.hpp>
 
 struct transform 
 {
