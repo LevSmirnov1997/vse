@@ -1,9 +1,9 @@
 #include "RenderSystem.hpp"
+#include "behaviours.hpp"
 #include <al/ecs.hpp>
 #include <al/gl.hpp>
 #include <al/math.hpp>
 #include <components/transform.hpp>
-#include <iostream>
 
 RenderSystem::RenderSystem(const program &p, int w, int h)
 	: m_p(p),
@@ -51,7 +51,7 @@ void RenderSystem::update(ecs &e)
 		}
 		auto p = Input::get().get_mouse_pos();
 
-		en.get<transform>().seek(m_cam.world_to_view({ (float)p.x, (float)p.y }));
+		seek(en.get<transform>(), m_cam.world_to_view({ (float)p.x, (float)p.y }));
 
 		const float *v = m_cam.get().get_values();
 		m_p.set_mat4("MVP", math::mult(m_cam.get(), t).get_values());
