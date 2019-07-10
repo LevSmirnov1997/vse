@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <cstring>
 #include <al/gl.hpp>
 #include <al/ecs.hpp>
@@ -7,6 +6,8 @@
 #include <systems/TransformationSystem.hpp>
 #include <systems/RenderSystem.hpp>
 #include "behaviours.hpp"
+#include <chrono>
+#include <thread>
 
 std::string get_program_path(const char *arg)
 {
@@ -18,7 +19,6 @@ std::string get_program_path(const char *arg)
 	const char *end = std::strrchr(arg, slash);
 	return { arg, size_t(end - arg) };
 }
-
 
 class CursorBehaviorSystem : public System
 {
@@ -112,18 +112,12 @@ int main(int argc, char **argv)
 		e.add_system(std::make_unique<TransformationSystem>());
 		e.add_system(std::make_unique<CursorBehaviorSystem>());
 
-		auto rect = e.create();
-		rect.add<model>(std::make_unique<Triangle>());
-		rect.add<transform>(mat4(), 0.f, vec2(), 10.f, 10.f);
-		auto & t = rect.get<transform>().transf;
-		t = math::translate(t, vec2(100, 100));
-
 		{
-			auto r = e.create();
-			r.add<model>(std::make_unique<Rect>());
-			r.add<transform>(mat4(), 0.f, vec2(), 15.f, 10.f);
-			auto & t = r.get<transform>().transf;
-			t = math::translate(t, vec2(500, 100));
+			auto rect = e.create();
+			rect.add<model>(std::make_unique<Triangle>());
+			rect.add<transform>(mat4(), 0.f, vec2(), 2.f, 100.f);
+			auto & t = rect.get<transform>().transf;
+			t = math::translate(t, vec2(200, 100));
 		}
 
 		glfwSwapInterval(1);
@@ -133,6 +127,7 @@ int main(int argc, char **argv)
 
 			w.swap_buffers();
 			glfwPollEvents();
+			std::this_thread::sleep_for(std::chrono::milliseconds(1));
 		}
 	}
 	catch (const std::exception &e) {

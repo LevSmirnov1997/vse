@@ -42,7 +42,7 @@ if (MSVC)
 	target_link_libraries(${PROJECT_NAME} glad ${GLFW_LIBRARIES})
 else()
     target_compile_options (${PROJECT_NAME} PRIVATE -std=c++14 -Wall -Wextra -Wpedantic -Wfatal-errors)
-	target_link_libraries(${PROJECT_NAME} glad glfw3 dl pthread X11 m)
+	target_link_libraries(${PROJECT_NAME} glad ${GLFW_LIBRARY} dl pthread X11 m)
 endif()
 
 

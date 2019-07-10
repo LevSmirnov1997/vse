@@ -88,10 +88,25 @@ float math::degrees(float radians)
 
 vec2 math::truncate(vec2 value, vec2 limit)
 {
-	return {
-		value.get_x() > limit.get_x() ? limit.get_x() : value.get_x(),
-		value.get_y() > limit.get_y() ? limit.get_y() : value.get_y(),
-	};
+	vec2 res = value;
+	if (value.get_x() > limit.get_x())
+	{
+		res.set_x(limit.get_x());
+	}
+	else if(value.get_x() < -limit.get_x())
+	{
+		res.set_x(-limit.get_x());
+	}
+
+	if(value.get_y() > limit.get_y())
+   	{
+		res.set_y(limit.get_y());
+	}
+	else if(value.get_y() < -limit.get_y())
+   	{
+		res.set_y(-limit.get_y());
+	}
+	return res;
 }
 
 vec2 math::normalize(vec2 v)

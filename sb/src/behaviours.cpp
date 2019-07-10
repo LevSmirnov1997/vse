@@ -1,19 +1,21 @@
 #include "behaviours.hpp"
 #include <al/math.hpp>
-#include <iostream>
 #include <random>
+//#include <iostream>
 
 static void update(transform &t, vec2 steering)
 {
 	vec2 steer_force = math::truncate(steering, { t.max_speed, t.max_speed });
 	vec2 accel{ steer_force.get_x() / t.mass, steer_force.get_y() / t.mass };
 
+	// unproportional truncation of the axises
 	t.velocity = math::truncate(t.velocity + accel, { t.max_speed, t.max_speed });
 	t.transf = math::translate(t.transf, t.velocity);
 
 	t.transf = math::rotate(t.transf, -t.angle);
 	t.angle = math::degrees(std::atan2(t.velocity.get_y(), t.velocity.get_x())) + 90.f;
 	t.transf = math::rotate(t.transf, t.angle);
+//	std::cout << "v: " << t.velocity.get_x() << " " << t.velocity.get_y() << std::endl; 
 }
 
 void seek(transform &t, vec2 dst)
@@ -34,44 +36,43 @@ void flee(transform &t, vec2 src)
 
 static std::mt19937 &get_rng()
 {
-	static std::mt19937 rng;
-	static bool init = false;
-	if (init)
-		return rng;
-	rng.seed(std::random_device()());
-	init = true;
+	static std::random_device rd;
+	static std::mt19937 rng(rd());
+	return rng;
+}
+
+static vec2 vec_rotate(const vec2 &v, float angle_deg)
+{
+	return {
+		std::cos(math::radians(angle_deg)) * v.magn(),
+		std::sin(math::radians(angle_deg)) * v.magn()
+	};
 }
 
 void wander(transform &t)
 {
-	vec2 actor_pos = { t.transf.get_values()[3], t.transf.get_values()[7] };
+	const float circle_distance = 5.f;
+	const float circle_radius = 35.f;
+	vec2 circle_pos = t.velocity;
+	circle_pos = math::normalize(circle_pos);
+	circle_pos = dot(circle_pos, circle_distance);
 
-	float step = 100.f;
-	float rad = math::radians(t.angle);
-	std::cout << rad << std::endl;
-	float x = (step * sin(rad));
-	float y = -fabs(step * cos(rad));
-	if (cos(rad) < 0)
-		y = -y;
-	if (step < 0)
-		y = -y;
-	vec2 sphere_pos = { actor_pos.get_x() + x, actor_pos.get_y() + y };
+	// calculate pseudo-random number
+	float max_angle_speed = 5.f;
+	std::uniform_real_distribution<> dist_angle(0.f, max_angle_speed);
+	std::uniform_int_distribution<> one_of_hundred(0, 99);
+	static float rand_value = 0.f;
+	static float sign = (dist_angle(get_rng()) >= max_angle_speed/2.f) ? 1.f : -1.f;
+	int chance = one_of_hundred(get_rng());
+	if (chance > 89)
+		sign = -sign;
+	rand_value += sign * dist_angle(get_rng());
 
-	float max_angle = 5.f;
-	std::uniform_real_distribution<> dist_angle(-max_angle, max_angle);
-	mat4 rotation;
-	rotation = math::rotate(rotation, dist_angle(get_rng()), sphere_pos);
+	vec2 displacement = { 0.f, -1.f };
+	displacement = dot(displacement, circle_radius);
+	displacement = vec_rotate(displacement, rand_value);
 
-	const float radius = 30.f;
-	vec2 cp{ x, y };
-	cp = dot(math::normalize(cp), radius);
-	cp += sphere_pos;
-	float deviation = dist_angle(get_rng());
-	float a = radius * std::sin(math::radians(deviation));
-	float b = a / std::tan(math::radians((180.f - deviation) / 2.f));
-	t.velocity = { t.velocity.get_x() - b, t.velocity.get_y() - a };
-	t.angle += deviation;
-	// t.transf = math::rotate(t.transf, t.angle);
-
-	seek(t, cp);
+	vec2 wander_force = displacement + circle_pos;
+	update(t, wander_force);
 }
+
