@@ -1,11 +1,13 @@
 #include <iostream>
-#include <vector>
 #include <cstring>
 #include <al/gl.hpp>
 #include <al/ecs.hpp>
 #include <al/math.hpp>
 #include <systems/TransformationSystem.hpp>
 #include <systems/RenderSystem.hpp>
+#include "behaviours.hpp"
+#include <chrono>
+#include <thread>
 
 std::string get_program_path(const char *arg)
 {
@@ -17,6 +19,67 @@ std::string get_program_path(const char *arg)
 	const char *end = std::strrchr(arg, slash);
 	return { arg, size_t(end - arg) };
 }
+
+class CursorBehaviorSystem : public System
+{
+	enum mode
+	{
+		mode_seek = 1,
+		mode_flee,
+		mode_wander,
+	};
+
+	mode m_mode = mode_seek;
+
+public:
+	CursorBehaviorSystem()
+	{
+		Input::get().on_key(
+			[this](event_key e) {
+				if (e.action != GLFW_PRESS)
+					return;
+				if (e.key == GLFW_KEY_1)
+					this->m_mode = mode_seek;
+				else if (e.key == GLFW_KEY_2)
+					this->m_mode = mode_flee;
+				else if (e.key == GLFW_KEY_3)
+					this->m_mode = mode_wander;
+		    }
+		);
+	}
+
+	void update(ecs &e) override
+	{
+		camera *cam = nullptr;
+		for (auto en : e.with<camera>())
+		{
+			cam = &en.get<camera>();
+			break;
+		}
+		if (nullptr == cam)
+			return;
+
+		auto p = Input::get().get_mouse_pos();
+		vec2 cursor_pos { cam->world_to_view({ (float)p.x, (float)p.y }) };
+		for (auto en : e.with<transform>())
+		{
+			switch (m_mode)
+			{
+			case CursorBehaviorSystem::mode_seek:
+				seek(en.get<transform>(), cursor_pos);
+				break;
+			case CursorBehaviorSystem::mode_flee:
+				flee(en.get<transform>(), cursor_pos);
+				break;
+			case CursorBehaviorSystem::mode_wander:
+				wander(en.get<transform>());
+				break;
+			default:
+				break;
+			}
+		}
+	}
+};
 
 int main(int argc, char **argv)
 {
@@ -45,14 +108,17 @@ int main(int argc, char **argv)
 		p.use();
 
 		ecs e;
-		e.add_system(std::make_unique<RenderSystem>(p, w.get_w(), w.get_h()));
+		e.add_system(std::make_unique<RenderSystem>(e, p, w.get_w(), w.get_h()));
 		e.add_system(std::make_unique<TransformationSystem>());
+		e.add_system(std::make_unique<CursorBehaviorSystem>());
 
-		auto rect = e.create();
-		rect.add<model>(std::make_unique<Triangle>());
-		rect.add<transform>();
-		auto & t = rect.get<transform>().transf;
-		t = math::translate(t, vec2(100, 100));
+		{
+			auto rect = e.create();
+			rect.add<model>(std::make_unique<Triangle>());
+			rect.add<transform>(mat4(), 0.f, vec2(), 2.f, 100.f);
+			auto & t = rect.get<transform>().transf;
+			t = math::translate(t, vec2(200, 100));
+		}
 
 		glfwSwapInterval(1);
 		while (w.is_open())
@@ -61,6 +127,7 @@ int main(int argc, char **argv)
 
 			w.swap_buffers();
 			glfwPollEvents();
+			std::this_thread::sleep_for(std::chrono::milliseconds(1));
 		}
 	}
 	catch (const std::exception &e) {

@@ -18,8 +18,13 @@ namespace math
 	/* Convert radians to degrees */
 	float degrees(float radians);
 
+	vec2 truncate(vec2 value, vec2 limit);
+
+	vec2 normalize(vec2 v);
+
 	mat4 scale(const mat4& t, const vec2& sc);
 	mat4 translate(const mat4& transf, const vec2& tr);
 	mat4 mult(const mat4& lhs, const mat4& rhs);
+	vec2 mult(const mat4 &lhs, const vec2 &rhs);
 	mat4 ortho(float left, float right, float bottom, float top, float near, float far);
 }

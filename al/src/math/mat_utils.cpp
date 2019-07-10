@@ -53,6 +53,16 @@ mat4 math::mult(const mat4& lhs, const mat4& rhs) {
 	return {t_arr};
 }
 
+vec2 math::mult(const mat4 &lhs, const vec2 &rhs)
+{
+	float f[2] { rhs.get_x(), rhs.get_y() };
+	const float *m = lhs.get_values();
+	return {
+		(m[0]*f[0] + m[1]*f[1] + m[2] + m[3]),
+		(m[4]*f[0] + m[5]*f[1] + m[6] + m[7])
+	};
+}
+
 mat4 math::ortho(float left, float right, float bottom, float top, float near, float far)
 {
 	float projection[16] = { 0.0f };
@@ -74,4 +84,35 @@ float math::radians(float degrees)
 float math::degrees(float radians)
 {
 	return radians * (180.f / PI);
+}
+
+vec2 math::truncate(vec2 value, vec2 limit)
+{
+	vec2 res = value;
+	if (value.get_x() > limit.get_x())
+	{
+		res.set_x(limit.get_x());
+	}
+	else if(value.get_x() < -limit.get_x())
+	{
+		res.set_x(-limit.get_x());
+	}
+
+	if(value.get_y() > limit.get_y())
+   	{
+		res.set_y(limit.get_y());
+	}
+	else if(value.get_y() < -limit.get_y())
+   	{
+		res.set_y(-limit.get_y());
+	}
+	return res;
+}
+
+vec2 math::normalize(vec2 v)
+{
+	float x = v.get_x();
+	float y = v.get_y();
+	float den = std::sqrt(x*x + y * y);
+	return { x / den, y / den };
 }
