@@ -2,6 +2,7 @@
 #include <vector>
 #include <unordered_map>
 #include <exception>
+#include <algorithm>
 
 using eid = size_t;
 
@@ -69,6 +70,13 @@ public:
 	{
 		return m_cmp[detail::type_id<T>].template has<T>(id);
 	}
+
+    template <typename ...T>
+    bool has_all(eid id)
+    {
+        std::vector<bool> res = { has<T>(id)... };
+        return std::all_of(res.begin(), res.end(), [](bool v) { return v; });
+    }
 
 	template <typename T, typename ...Args>
 	bool add(eid id, Args&& ...args)

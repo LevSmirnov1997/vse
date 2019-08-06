@@ -20,16 +20,16 @@ public:
         return this->m_id == e.m_id;
     }
 
-	template <typename T>
-	bool has() const
-	{
+    template <typename ...T>
+    bool has() const
+    {
         if (! valid())
         {
             // TODO: add logging
             return false;
         }
-		return m_man.template has<T>(m_id);
-	}
+		return m_man.template has_all<T...>(m_id);
+    }
 
 	template <typename T, typename ...Args>
 	bool add(Args&& ...args) const
@@ -101,13 +101,13 @@ public:
 
 	void update();
 
-	template <typename T>
+	template <typename ...T>
 	std::vector<entity> with() const
 	{
 		std::vector<entity> res;
 		for (const auto &e : m_ens)
 		{
-			if (e.has<T>() && is_valid(e))
+			if (e.has<T...>() && is_valid(e))
 				res.push_back(e);
 		}
 		return res;
