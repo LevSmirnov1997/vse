@@ -12,8 +12,8 @@ endif()
 find_package(GLFW REQUIRED)
 include_directories(${GLFW_INCLUDE_DIR})
 
-file(GLOB_RECURSE SOURCES "src/" "*.cpp") 
-file(GLOB_RECURSE HEADERS "src/" "*.hpp") 
+file(GLOB_RECURSE SOURCES "src/" "*.cpp")
+file(GLOB_RECURSE HEADERS "src/" "*.hpp")
 file(GLOB PUBLIC_HEADERS "include/${PROJECT_NAME}/*.hpp")
 
 add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS} ${PUBLIC_HEADERS})
