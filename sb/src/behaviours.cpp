@@ -6,16 +6,16 @@
 static void update(CTransform &t, vec2 steering)
 {
 	vec2 steer_force = math::truncate(steering, { t.max_speed, t.max_speed });
-	vec2 accel{ steer_force.get_x() / t.mass, steer_force.get_y() / t.mass };
+	vec2 accel{ steer_force.x / t.mass, steer_force.y / t.mass };
 
 	// unproportional truncation of the axises
 	t.velocity = math::truncate(t.velocity + accel, { t.max_speed, t.max_speed });
 	t.transf = math::translate(t.transf, t.velocity);
 
 	t.transf = math::rotate(t.transf, -t.angle);
-	t.angle = math::degrees(std::atan2(t.velocity.get_y(), t.velocity.get_x())) + 90.f;
+	t.angle = math::degrees(std::atan2(t.velocity.y, t.velocity.x)) + 90.f;
 	t.transf = math::rotate(t.transf, t.angle);
-//	std::cout << "v: " << t.velocity.get_x() << " " << t.velocity.get_y() << std::endl;
+//	std::cout << "v: " << t.velocity.x << " " << t.velocity.y << std::endl;
 }
 
 void seek(CTransform &t, vec2 dst)
@@ -44,8 +44,8 @@ static std::mt19937 &get_rng()
 static vec2 vec_rotate(const vec2 &v, float angle_deg)
 {
 	return {
-		std::cos(math::radians(angle_deg)) * v.magn(),
-		std::sin(math::radians(angle_deg)) * v.magn()
+		std::cos(math::radians(angle_deg)) * magn(v),
+		std::sin(math::radians(angle_deg)) * magn(v)
 	};
 }
 

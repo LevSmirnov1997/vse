@@ -5,8 +5,8 @@ constexpr float PI = 3.141592653f;
 
 mat4 math::scale(const mat4& transf, const vec2& sc) {
 	float t_arr[16] = {0.0f};
-	t_arr[0] = sc.get_x();
-	t_arr[5] = sc.get_y();
+	t_arr[0] = sc.x;
+	t_arr[5] = sc.y;
 	t_arr[10] = 1.0f;
 	t_arr[15] = 1.0f;
 	return math::mult(transf, mat4(t_arr));
@@ -14,13 +14,13 @@ mat4 math::scale(const mat4& transf, const vec2& sc) {
 
 mat4 math::rotate(const mat4& transf, float rt, vec2 around) {
 	float x, y;
-	if (around.get_x() == std::numeric_limits<float>::infinity()) {
+	if (around.x == std::numeric_limits<float>::infinity()) {
 		x = transf.get_values()[3];
 		y = transf.get_values()[7];
 	}
 	else {
-		x = around.get_x();
-		y = around.get_y();
+		x = around.x;
+		y = around.y;
 	}
 	float t_arr[16] = {0.0f};
 	for (int i = 0; i < 4; ++i)
@@ -36,8 +36,8 @@ mat4 math::translate(const mat4& transf, const vec2& tr) {
 	float t_arr[16] = {0.0f};
 	for (int i = 0; i < 4; ++i)
 		t_arr[5 * i] = 1;
-	t_arr[3] = tr.get_x();
-	t_arr[7] = tr.get_y();
+	t_arr[3] = tr.x;
+	t_arr[7] = tr.y;
 	return math::mult(mat4(t_arr), transf);
 }
 
@@ -55,7 +55,7 @@ mat4 math::mult(const mat4& lhs, const mat4& rhs) {
 
 vec2 math::mult(const mat4 &lhs, const vec2 &rhs)
 {
-	float f[2] { rhs.get_x(), rhs.get_y() };
+	float f[2] { rhs.x, rhs.y };
 	const float *m = lhs.get_values();
 	return {
 		(m[0]*f[0] + m[1]*f[1] + m[2] + m[3]),
@@ -89,30 +89,30 @@ float math::degrees(float radians)
 vec2 math::truncate(vec2 value, vec2 limit)
 {
 	vec2 res = value;
-	if (value.get_x() > limit.get_x())
+	if (value.x > limit.x)
 	{
-		res.set_x(limit.get_x());
+		res.x = limit.x;
 	}
-	else if(value.get_x() < -limit.get_x())
+	else if(value.x < -limit.x)
 	{
-		res.set_x(-limit.get_x());
+		res.x = -limit.x;
 	}
 
-	if(value.get_y() > limit.get_y())
+	if(value.y > limit.y)
    	{
-		res.set_y(limit.get_y());
+		res.y = limit.y;
 	}
-	else if(value.get_y() < -limit.get_y())
+	else if(value.y < -limit.y)
    	{
-		res.set_y(-limit.get_y());
+		res.y = -limit.y;
 	}
 	return res;
 }
 
 vec2 math::normalize(vec2 v)
 {
-	float x = v.get_x();
-	float y = v.get_y();
+	float x = v.x;
+	float y = v.y;
 	float den = std::sqrt(x*x + y * y);
 	return { x / den, y / den };
 }

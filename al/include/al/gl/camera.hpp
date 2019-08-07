@@ -26,7 +26,7 @@ private:
 	void update();
 
 	mat4 m_view;
-	vec2 m_position;
-	float m_scale;
 	int m_w, m_h;
+	float m_scale;
+	vec2 m_position;
 };
