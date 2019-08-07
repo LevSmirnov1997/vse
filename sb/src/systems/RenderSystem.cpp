@@ -2,7 +2,7 @@
 #include <al/ecs.hpp>
 #include <al/gl.hpp>
 #include <al/math.hpp>
-#include <components/transform.hpp>
+#include <components/CTransform.hpp>
 
 RenderSystem::RenderSystem(ecs &e, const program &p, int w, int h)
 	: m_p(p),
@@ -39,10 +39,10 @@ void RenderSystem::update(ecs &e)
 	camera &cam = m_cam.get<camera>();
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-	for (const entity& en : e.with<model>())
+	for (const entity& en : e.with<CModel>())
 	{
-		const auto &m = en.get<model>();
-		const mat4 &t = en.has<transform>() ? en.get<transform>().transf : mat4();
+		const auto &m = en.get<CModel>();
+		const mat4 &t = en.has<CTransform>() ? en.get<CTransform>().transf : mat4();
 		if (is_moving)
 		{
 			auto cur_pos = Input::get().get_mouse_pos();
@@ -51,9 +51,7 @@ void RenderSystem::update(ecs &e)
 			m_last_mouse = { (float)cur_pos.x, (float)cur_pos.y };
 		}
 
-		const float *v = cam.get().get_values();
 		m_p.set_mat4("MVP", math::mult(cam.get(), t).get_values());
-
 		m.ptr->bind();
 		glDrawElements(GL_TRIANGLES, m.ptr->size(), GL_UNSIGNED_INT, 0);
 	}

@@ -3,7 +3,7 @@
 #include <random>
 //#include <iostream>
 
-static void update(transform &t, vec2 steering)
+static void update(CTransform &t, vec2 steering)
 {
 	vec2 steer_force = math::truncate(steering, { t.max_speed, t.max_speed });
 	vec2 accel{ steer_force.get_x() / t.mass, steer_force.get_y() / t.mass };
@@ -15,10 +15,10 @@ static void update(transform &t, vec2 steering)
 	t.transf = math::rotate(t.transf, -t.angle);
 	t.angle = math::degrees(std::atan2(t.velocity.get_y(), t.velocity.get_x())) + 90.f;
 	t.transf = math::rotate(t.transf, t.angle);
-//	std::cout << "v: " << t.velocity.get_x() << " " << t.velocity.get_y() << std::endl; 
+//	std::cout << "v: " << t.velocity.get_x() << " " << t.velocity.get_y() << std::endl;
 }
 
-void seek(transform &t, vec2 dst)
+void seek(CTransform &t, vec2 dst)
 {
 	vec2 position = { t.transf.get_values()[3], t.transf.get_values()[7] };
 	vec2 des_vel = dot(math::normalize(dst - position), t.max_speed);
@@ -26,7 +26,7 @@ void seek(transform &t, vec2 dst)
 	update(t, steering);
 }
 
-void flee(transform &t, vec2 src)
+void flee(CTransform &t, vec2 src)
 {
 	vec2 position = { t.transf.get_values()[3], t.transf.get_values()[7] };
 	vec2 des_vel = dot(math::normalize(position - src), t.max_speed);
@@ -49,7 +49,7 @@ static vec2 vec_rotate(const vec2 &v, float angle_deg)
 	};
 }
 
-void wander(transform &t)
+void wander(CTransform &t)
 {
 	const float circle_distance = 5.f;
 	const float circle_radius = 35.f;

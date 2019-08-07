@@ -2,7 +2,7 @@
 #include <al/math/mat4.hpp>
 #include <al/math/vec2.hpp>
 
-struct transform 
+struct CTransform
 {
 	mat4 transf;
     float angle = 0.f;

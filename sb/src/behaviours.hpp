@@ -1,9 +1,9 @@
 #pragma once
 
-#include "components/transform.hpp"
+#include "components/CTransform.hpp"
 
-void seek(transform &t, vec2 dst);
+void seek(CTransform &t, vec2 dst);
 
-void flee(transform &t, vec2 src);
+void flee(CTransform &t, vec2 src);
 
-void wander(transform &t);
+void wander(CTransform &t);

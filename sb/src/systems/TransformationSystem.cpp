@@ -3,7 +3,7 @@
 #include <al/math/mat_utils.hpp>
 #include <al/gl.hpp>
 
-static void move(transform &t, float step)
+static void move(CTransform &t, float step)
 {
 	float rad = math::radians(t.angle);
 	float x = (step * sin(rad));
@@ -15,7 +15,7 @@ static void move(transform &t, float step)
 	t.transf = math::translate(t.transf, vec2(x, y));
 }
 
-static void rotate(transform &t, float degr)
+static void rotate(CTransform &t, float degr)
 {
 	t.angle += degr;
 	t.transf = math::rotate(t.transf, degr);
@@ -23,15 +23,15 @@ static void rotate(transform &t, float degr)
 
 void TransformationSystem::update(ecs &ens)
 {
-	for (const auto &e : ens.with<transform>())
+	for (const auto &e : ens.with<CTransform>())
 	{
 		while (!m_keyque.empty())
 		{
-			mat4 &t = e.get<transform>().transf;
+			mat4 &t = e.get<CTransform>().transf;
 			if (m_keyque.front() == GLFW_KEY_E)
-				rotate(e.get<transform>(), 6);
+				rotate(e.get<CTransform>(), 6);
 			else if (m_keyque.front() == GLFW_KEY_Q)
-				rotate(e.get<transform>(), -6);
+				rotate(e.get<CTransform>(), -6);
 
 			else if (m_keyque.front() == GLFW_KEY_DOWN)
 				t = math::translate(t, vec2(0, 50));
@@ -52,9 +52,9 @@ void TransformationSystem::update(ecs &ens)
 				t = math::scale(t, vec2(1.1, 1));
 
 			else if (m_keyque.front() == GLFW_KEY_KP_8)
-				move(e.get<transform>(), 10);
+				move(e.get<CTransform>(), 10);
 			else if (m_keyque.front() == GLFW_KEY_KP_2)
-				move(e.get<transform>(), -10);
+				move(e.get<CTransform>(), -10);
 
 			m_keyque.pop();
 		}

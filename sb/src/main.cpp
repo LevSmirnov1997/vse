@@ -61,18 +61,18 @@ public:
 
 		auto p = Input::get().get_mouse_pos();
 		vec2 cursor_pos { cam->world_to_view({ (float)p.x, (float)p.y }) };
-		for (auto en : e.with<transform>())
+		for (auto en : e.with<CTransform>())
 		{
 			switch (m_mode)
 			{
 			case CursorBehaviorSystem::mode_seek:
-				seek(en.get<transform>(), cursor_pos);
+				seek(en.get<CTransform>(), cursor_pos);
 				break;
 			case CursorBehaviorSystem::mode_flee:
-				flee(en.get<transform>(), cursor_pos);
+				flee(en.get<CTransform>(), cursor_pos);
 				break;
 			case CursorBehaviorSystem::mode_wander:
-				wander(en.get<transform>());
+				wander(en.get<CTransform>());
 				break;
 			default:
 				break;
@@ -114,9 +114,9 @@ int main(int argc, char **argv)
 
 		{
 			auto rect = e.create();
-			rect.add<model>(std::make_unique<Triangle>());
-			rect.add<transform>(mat4(), 0.f, vec2(), 2.f, 100.f);
-			auto & t = rect.get<transform>().transf;
+			rect.add<CModel>(std::make_unique<Triangle>());
+			rect.add<CTransform>(mat4(), 0.f, vec2(), 2.f, 100.f);
+			auto & t = rect.get<CTransform>().transf;
 			t = math::translate(t, vec2(200, 100));
 		}
 

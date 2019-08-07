@@ -3,7 +3,7 @@
 #include <al/ecs.hpp>
 #include <al/math/mat4.hpp>
 #include <al/math/vec2.hpp>
-#include <components/model.hpp>
+#include <components/CModel.hpp>
 
 class RenderSystem : public System
 {

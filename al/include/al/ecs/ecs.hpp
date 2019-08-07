@@ -48,6 +48,7 @@ public:
         if (! valid())
         {
             // TODO: add logging
+            // return false; uuugh
         }
 		return m_man.template get<T>(m_id);
 	}

@@ -2,7 +2,7 @@
 #include <al/gl/shapes.hpp>
 #include <memory>
 
-struct model
+struct CModel
 {
 	std::unique_ptr<shape> ptr;
 };
