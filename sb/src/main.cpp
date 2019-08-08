@@ -81,6 +81,16 @@ public:
 	}
 };
 
+
+static void print_mat4(const mat4 &m)
+{
+    auto *v = m.get_values();
+    std::cout<< v[0] << ",\t" << v[1] << ",\t" << v[2] << ",\t"<< v[3] << std::endl;
+    std::cout<< v[4] << ",\t" << v[5] << ",\t" << v[6] << ",\t"<< v[7] << std::endl;
+    std::cout<< v[8] << ",\t" << v[9] << ",\t" << v[10] << ",\t"<< v[11] << std::endl;
+    std::cout<< v[12] << ",\t" << v[13] << ",\t" << v[14] << ",\t"<< v[15] << std::endl;
+}
+
 int main(int argc, char **argv)
 {
 	const std::string current_path = get_program_path(argv[0]);
@@ -119,6 +129,7 @@ int main(int argc, char **argv)
 			auto & t = rect.get<CTransform>().transf;
 			t = math::translate(t, vec2(200, 100));
 		}
+
 
 		glfwSwapInterval(1);
 		while (w.is_open())

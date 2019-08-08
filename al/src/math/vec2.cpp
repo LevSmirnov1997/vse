@@ -33,6 +33,11 @@ vec2 vec2::operator-=(const vec2 &rhs)
 	return *this;
 }
 
+bool vec2::operator==(const vec2 &rhs) const
+{
+    return (x == rhs.x && y == rhs.y);
+}
+
 float magn(const vec2 &v)
 {
     return sqrt(pow(v.x, 2.0) + pow(v.y, 2.0));

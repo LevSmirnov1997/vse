@@ -27,4 +27,5 @@ namespace math
 	mat4 mult(const mat4& lhs, const mat4& rhs);
 	vec2 mult(const mat4 &lhs, const vec2 &rhs);
 	mat4 ortho(float left, float right, float bottom, float top, float near, float far);
+    bool inverse(const mat4 &in, mat4 &out);
 }

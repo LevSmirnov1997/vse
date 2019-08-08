@@ -11,6 +11,7 @@ struct vec2
     vec2 operator-(const vec2 &rhs) const; //Subtracting vectors
 	vec2 operator+=(const vec2 &rhs);
 	vec2 operator-=(const vec2 &rhs);
+    bool operator==(const vec2 &rhs) const;
 };
 
 float magn(const vec2 &v); //Magnitude of vector
